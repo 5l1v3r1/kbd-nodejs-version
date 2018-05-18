@@ -21,7 +21,7 @@ router.get('/seed', async function (req, res) {
         name: "بهنام همایون",
         phone: "09123019702",
         balance: 1000,
-        username: "salam",
+        username: "admin",
         password: "123"
     });
 
