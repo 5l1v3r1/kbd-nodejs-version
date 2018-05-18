@@ -1,9 +1,16 @@
 let Sequelize = require('sequelize');
 let sequelize = require('../helpers/database');
+let PaidHouse = require('./paidHouse');
 
 const House = sequelize.define('house', {
-    id: { type: Sequelize.UUIDV4, primaryKey: true },
-    owner: Sequelize.UUID,
+    id: {
+        type: Sequelize.STRING,
+        primaryKey: true
+    },
+    owner: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+    },
     building_type: Sequelize.ENUM('APARTMENT', 'VILLA'),
     deal_type: Sequelize.ENUM('BUY', 'RENTAL'),
     base_price: Sequelize.INTEGER,
@@ -14,6 +21,10 @@ const House = sequelize.define('house', {
     image_URL: Sequelize.STRING,
     phone: Sequelize.STRING,
     description: Sequelize.TEXT
+});
+
+House.hasMany(PaidHouse, {
+    as: 'owners',
 });
 
 module.exports = House;
