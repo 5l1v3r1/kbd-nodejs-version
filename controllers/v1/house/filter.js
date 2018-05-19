@@ -36,7 +36,11 @@ router.get("/", validate(rules.house.filter), async (req, res) => {
     }
 
     let houses = await House.findAll(config);
-    res.json(jsonResponse.successData(houses));
+    let result = [];
+
+    for (let i in houses)
+        result.push(await houses[i].filterPhone(req.user));
+    res.json(jsonResponse.successData(result));
 });
 
 module.exports = router;

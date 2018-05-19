@@ -27,4 +27,21 @@ House.hasMany(PaidHouse, {
     as: 'owners',
 });
 
+House.prototype.filterPhone = async function(user) {
+    let paidHouses = await PaidHouse.findAll({
+        where: {
+            individualUserId: user.id,
+            houseId: this.id
+        }
+    });
+    let result = this.toJSON();
+    if (paidHouses.length === 0) {
+        result.phone = this.phone.substr(0, 4) + '****' + this.phone.slice(-2);
+        result.hasBoughtPhone = false;
+    } else {
+        result.hasBoughtPhone = true;
+    }
+    return result;
+};
+
 module.exports = House;
