@@ -1,12 +1,12 @@
 let express = require('express');
 let router = express.Router();
 
-let indexRouter = require('./index');
-let usersRouter = require('./users');
+let usersRouter = require('./user');
 let authRouter = require('./auth');
+let houseRouter = require('./house');
 
-router.use('/', indexRouter);
-router.use('/users', usersRouter);
+router.use('/', usersRouter);
 router.use('/auth', authRouter);
+router.use('/house', houseRouter);
 
 module.exports = router;
