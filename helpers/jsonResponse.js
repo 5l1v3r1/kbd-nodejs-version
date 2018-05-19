@@ -19,5 +19,11 @@ module.exports =  {
             "code": this.SUCCESS_CODE,
             "data": data
         };
+    },
+    error(code, message) {
+        return {
+            "code": code,
+            "message": message
+        };
     }
 };

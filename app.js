@@ -4,6 +4,9 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let app = express();
+let ev = require('express-validation');
+let jsonResponse = require("./helpers/jsonResponse");
+
 
 let v1Controller = require('./controllers/v1/mainRouter');
 let db = require('./controllers/db');
@@ -31,6 +34,12 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  if (err instanceof ev.ValidationError) {
+        console.log(err);
+      let data = jsonResponse.error(err.status, err.message);
+      return res.status(err.status).json(data);
+  }
+
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
