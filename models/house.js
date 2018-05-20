@@ -28,7 +28,7 @@ House.hasMany(PaidHouse, {
     as: 'owners',
 });
 
-House.prototype.filterPhone = async (user) => {
+House.prototype.filterPhone = async function(user) {
     let paidHouses = await PaidHouse.findAll({
         where: {
             individualUserId: user.id,
@@ -43,6 +43,14 @@ House.prototype.filterPhone = async (user) => {
         result.hasBoughtPhone = true;
     }
     return result;
+};
+
+House.deleteAllByOwner = async (ownerID) => {
+    await Houses.destroy({
+        where: {
+            owner: ownerID
+        }
+    });
 };
 
 module.exports = House;
