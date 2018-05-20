@@ -7,7 +7,6 @@ let jsonResponse = require("../../../helpers/jsonResponse");
 let rules = require('../../../validations');
 let config = require('../../../helpers/config');
 
-
 router.post('/', validate(rules.charge), (req, res) => {
     let user = req.user;
     const balanceValue = req.body["balance-value"];
@@ -23,6 +22,7 @@ router.post('/', validate(rules.charge), (req, res) => {
             value: balanceValue
         }
     };
+
     request(options, async (error, response, body) => {
         if (!error && response.statusCode === 200) {
             await user.update({balance: user.balance + balanceValue});

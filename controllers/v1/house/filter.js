@@ -10,14 +10,8 @@ let rules = require('../../../validations');
 let House = require('../../../models/house');
 
 router.get("/", validate(rules.house.filter), async (req, res) => {
-    let area = 0;
-    if (req.query["minimum-area"])
-        area = req.query["minimum-area"];
-
-    let price = null;
-    if (req.query["maximum-price"])
-        price = req.query["maximum-price"];
-
+    let area = req.query["minimum-area"] || 0;
+    let price = req.query["maximum-price"] || null;
     let dealType = (req.query["deal-type"] === '0') ? "BUY" : "RENTAL";
     let buildingType = (req.query["building-type"] === '0') ? "VILLA" : "APARTMENT";
 

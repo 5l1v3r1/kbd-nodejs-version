@@ -8,7 +8,7 @@ let ev = require('express-validation');
 let jsonResponse = require("./helpers/jsonResponse");
 
 
-let v1Controller = require('./controllers/v1/mainRouter');
+let v1Controller = require('./controllers/v1/index');
 let db = require('./controllers/db');
 
 // view engine setup

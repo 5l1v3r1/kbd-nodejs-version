@@ -8,11 +8,11 @@ router.get("/:owner/:id", async (req, res) => {
     let house = {};
     if (req.params.owner === 'system') {
         house = await House.findById(req.params.id);
-        house = await house.filterPhone(req.user);
     }
     else {
         // TODO: get house from realstate server
     }
+    house = await house.filterPhone(req.user);
     res.json(jsonResponse.successData(house));
 });
 

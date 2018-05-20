@@ -23,6 +23,7 @@ const House = sequelize.define('house', {
     description: Sequelize.TEXT
 });
 
+//TODO: belongsToMany
 House.hasMany(PaidHouse, {
     as: 'owners',
 });
