@@ -27,7 +27,7 @@ House.hasMany(PaidHouse, {
     as: 'owners',
 });
 
-House.prototype.filterPhone = async function(user) {
+House.prototype.filterPhone = async (user) => {
     let paidHouses = await PaidHouse.findAll({
         where: {
             individualUserId: user.id,

@@ -23,7 +23,7 @@ router.post('/', validate(rules.charge), (req, res) => {
             value: balanceValue
         }
     };
-    request(options, async function (error, response, body) {
+    request(options, async (error, response, body) => {
         if (!error && response.statusCode === 200) {
             await user.update({balance: user.balance + balanceValue});
             res.json(jsonResponse.successMessage("موجودی حساب شما با موفقیت افزایش یافت."));

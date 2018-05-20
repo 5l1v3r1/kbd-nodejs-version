@@ -8,7 +8,7 @@ let generateId = require('../helpers/idGenerator');
 let express = require('express');
 let router = express.Router();
 
-router.get('/create-tables', function (req, res) {
+router.get('/create-tables', (req, res) => {
     House.sync();
     PaidHouse.sync();
     IndividualUser.sync();
@@ -16,7 +16,7 @@ router.get('/create-tables', function (req, res) {
     res.send("created!");
 });
 
-router.get('/seed', async function (req, res) {
+router.get('/seed', async (req, res) => {
     IndividualUser.create({
         name: "بهنام همایون",
         phone: "09123019702",

@@ -3,7 +3,7 @@ module.exports =  {
 
     filter(obj, list) {
         let newObj = {};
-        list.forEach(function(prop) {
+        list.forEach((prop) => {
             newObj[prop] = obj[prop];
         });
         return newObj;
