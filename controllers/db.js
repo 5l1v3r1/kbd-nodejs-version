@@ -83,4 +83,9 @@ router.get('/seed', async (req, res) => {
     res.send("seeded");
 });
 
+router.get('/fetch-houses', async (req, res) => {
+    await RealstateUser.updateAll();
+    res.send("fetched!");
+});
+
 module.exports = router;

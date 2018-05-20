@@ -5,12 +5,14 @@ let validate = require('express-validation');
 let jsonResponse = require("../../../helpers/jsonResponse");
 let rules = require('../../../validations');
 let config = require('../../../helpers/config');
+let RealstateUser = require('../../../models/realstateUser');
 let House = require('../../../models/house');
 let PaidHouse = require('../../../models/paidHouse');
 
 router.post('/', validate(rules.auth.pay), async (req, res) => {
     let user = req.user;
-    let house = await House.findById(req.body.id);
+    const owner = await RealstateUser.find({where: {name: req.body.owner}});
+    let house = await owner.getHouse(req.body.id);
 
     if (!house)
         return res.status(400).json(jsonResponse.error(400, "این خانه در سیستم یافت نشد."));
@@ -31,7 +33,7 @@ router.post('/', validate(rules.auth.pay), async (req, res) => {
                 houseId: house.id,
             });
             await user.update({balance: user.balance - config.HOUSE_OWNER_NUMBER_PRICE});
-            let result = await house.filterPhone(user);
+            let result = await House.filterPhone(house, user);
             return res.json(jsonResponse.success("مبلغ ۱۰۰۰ تومان برای دریافت شماره مالک/مشاور از حساب شما کسر شد", result));
         }
 

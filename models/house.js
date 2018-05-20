@@ -28,39 +28,48 @@ House.hasMany(PaidHouse, {
     as: 'owners',
 });
 
-House.prototype.filterPhone = async function(user)  {
-    let paidHouses = await PaidHouse.findAll({
-        where: {
-            individualUserId: user.id,
-            houseId: this.id
+House.filterPhone = async function(house, user)  {
+    let result = {
+        id: house.id,
+        owner: (house.owner === 1) ? "system" : "khane-be-doosh",
+        imgURL: house.image_URL,
+        area: house.area,
+        buildingType: house.building_type,
+        dealType: house.deal_type,
+        address: house.address,
+        description: house.description,
+    };
+
+    if (house.phone) {
+        let paidHouses = await PaidHouse.findAll({
+            where: {
+                individualUserId: user.id,
+                houseId: house.id
+            }
+        });
+        if (paidHouses.length === 0) {
+            result.phone = house.phone.substr(0, 3) + '****' + house.phone.slice(-2);
+            result.hasBoughtPhone = false;
+        } else {
+            result.phone = house.phone;
+            result.hasBoughtPhone = true;
         }
-    });
-    let result = this.toJSON();
-    if (paidHouses.length === 0) {
-        result.phone = this.phone.substr(0, 4) + '****' + this.phone.slice(-2);
-        result.hasBoughtPhone = false;
-    } else {
-        result.hasBoughtPhone = true;
     }
 
-    delete result.base_price;
-    delete result.sell_price;
-    delete result.rent_price;
-
     result.price = {};
-    if (result.deal_type === 'BUY')
-        result.price.sell = this.sell_price;
+    if (house.deal_type === 'BUY')
+        result.price.sell = house.sell_price;
     else
         result.price = {
-            base: this.base_price,
-            rent: this.rent_price,
+            base: house.base_price,
+            rent: house.rent_price,
         };
 
     return result;
 };
 
-House.deleteAllByOwner = async (ownerID) => {
-    await Houses.destroy({
+House.deleteAllByOwner = async function(ownerID) {
+    await House.destroy({
         where: {
             owner: ownerID
         }

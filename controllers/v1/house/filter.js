@@ -12,8 +12,8 @@ let House = require('../../../models/house');
 router.get("/", validate(rules.house.filter), async (req, res) => {
     let area = req.query["minimum-area"] || 0;
     let price = req.query["maximum-price"] || null;
-    let dealType = (req.query["deal-type"] === '0') ? "BUY" : "RENTAL";
-    let buildingType = (req.query["building-type"] === '0') ? "VILLA" : "APARTMENT";
+    let dealType = (req.query["deal-type"] === 0) ? "BUY" : "RENTAL";
+    let buildingType = (req.query["building-type"] === 0) ? "VILLA" : "APARTMENT";
 
     let config = {
         where: {
@@ -32,8 +32,10 @@ router.get("/", validate(rules.house.filter), async (req, res) => {
     let houses = await House.findAll(config);
     let result = [];
 
-    for (let i in houses)
-        result.push(await houses[i].filterPhone(req.user));
+    for (let i in houses) {
+        let tmp = await House.filterPhone(houses[i], req.user);
+        result.push(jsonResponse.filter(tmp, ["id", "owner", "area", "address", "buildingType", "dealType", "imgURL", "price"]));
+    }
     res.json(jsonResponse.successData(result));
 });
 

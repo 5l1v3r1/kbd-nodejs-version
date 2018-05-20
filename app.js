@@ -21,9 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/', require('./middlewares/auth'));
+app.use('/KhaneBeDoosh/api/v1/', require('./middlewares/auth'));
 
-app.use('/api/v1/', v1Controller);
+app.use('/KhaneBeDoosh/api/v1/', v1Controller);
 app.use('/db', db);
 
 // catch 404 and forward to error handler
