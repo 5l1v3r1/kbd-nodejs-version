@@ -59,4 +59,12 @@ House.prototype.filterPhone = async function(user)  {
     return result;
 };
 
+House.deleteAllByOwner = async (ownerID) => {
+    await Houses.destroy({
+        where: {
+            owner: ownerID
+        }
+    });
+};
+
 module.exports = House;
