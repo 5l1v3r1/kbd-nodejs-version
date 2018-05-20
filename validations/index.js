@@ -1,9 +1,17 @@
 let Joi = require('joi');
 
 module.exports = {
-    charge: {
-        body: {
-            "balance-value": Joi.number().required()
+    auth: {
+        charge: {
+            body: {
+                "balance-value": Joi.number().required()
+            }
+        },
+        pay: {
+            body: {
+                id: Joi.string().required(),
+                owner: Joi.string().required(),
+            }
         }
     },
     house: {

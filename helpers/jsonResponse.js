@@ -20,6 +20,13 @@ module.exports =  {
             "data": data
         };
     },
+    success(message, data) {
+        return {
+            "code": this.SUCCESS_CODE,
+            "data": data,
+            "message": message
+        };
+    },
     error(code, message) {
         return {
             "code": code,

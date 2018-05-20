@@ -7,7 +7,7 @@ let jsonResponse = require("../../../helpers/jsonResponse");
 let rules = require('../../../validations');
 let config = require('../../../helpers/config');
 
-router.post('/', validate(rules.charge), (req, res) => {
+router.post('/', validate(rules.auth.charge), (req, res) => {
     let user = req.user;
     const balanceValue = req.body["balance-value"];
     const options = {
