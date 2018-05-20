@@ -28,7 +28,7 @@ House.hasMany(PaidHouse, {
     as: 'owners',
 });
 
-House.prototype.filterPhone = async (user) => {
+House.prototype.filterPhone = async function(user)  {
     let paidHouses = await PaidHouse.findAll({
         where: {
             individualUserId: user.id,
@@ -42,6 +42,20 @@ House.prototype.filterPhone = async (user) => {
     } else {
         result.hasBoughtPhone = true;
     }
+
+    delete result.base_price;
+    delete result.sell_price;
+    delete result.rent_price;
+
+    result.price = {};
+    if (result.deal_type === 'BUY')
+        result.price.sell = this.sell_price;
+    else
+        result.price = {
+            base: this.base_price,
+            rent: this.rent_price,
+        };
+
     return result;
 };
 
