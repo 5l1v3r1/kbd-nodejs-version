@@ -72,7 +72,7 @@ router.get('/seed', async (req, res) => {
         building_type: 'VILLA',
         deal_type: 'RENTAL',
         base_price: 200,
-        sell_price: 20000,
+        rent_price: 20000,
         area: 400,
         address: "شمرون",
         image_URL: config.NO_IMAGE_PATH,
