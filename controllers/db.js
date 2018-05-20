@@ -3,7 +3,7 @@ let PaidHouse = require('../models/paidHouse');
 let IndividualUser = require('../models/individualUser');
 let RealstateUser = require('../models/realstateUser');
 let config = require('../helpers/config');
-let generateId = require('../helpers/idGenerator');
+let uniqid = require('uniqid');
 
 let express = require('express');
 let router = express.Router();
@@ -31,7 +31,7 @@ router.get('/seed', async (req, res) => {
     const system = await RealstateUser.find({where: {name: "system"}});
 
     House.create({
-        id: generateId(),
+        id: uniqid(),
         owner: system.id,
         building_type: 'APARTMENT',
         deal_type: 'BUY',
@@ -43,7 +43,7 @@ router.get('/seed', async (req, res) => {
         description: "simple"
     });
     House.create({
-        id: generateId(),
+        id: uniqid(),
         owner: system.id,
         building_type: 'APARTMENT',
         deal_type: 'BUY',
@@ -55,7 +55,7 @@ router.get('/seed', async (req, res) => {
         description: "so simple"
     });
     House.create({
-        id: generateId(),
+        id: uniqid(),
         owner: system.id,
         building_type: 'VILLA',
         deal_type: 'BUY',
@@ -67,7 +67,7 @@ router.get('/seed', async (req, res) => {
         description: "awesome"
     });
     House.create({
-        id: generateId(),
+        id: uniqid(),
         owner: system.id,
         building_type: 'VILLA',
         deal_type: 'RENTAL',
